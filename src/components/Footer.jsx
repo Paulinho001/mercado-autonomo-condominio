@@ -21,9 +21,9 @@ export default function Footer() {
 
         <div>
           <h3>Contato</h3>
-          <p>Cuiabá - MT</p>
+          <p>Cascavel - PR</p>
           <p>contato@mercadoautonomo.com</p>
-          <p>(65) 99999-9999</p>
+          <p>(45) 99999-9999</p>
         </div>
       </div>
 
