@@ -29,18 +29,19 @@ exports.handler = async (event) => {
     });
 
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: process.env.CONTACT_EMAIL,
-      subject: "Novo morador interessado no Mercado Autônomo",
-      text: `
+  from: `"Mercado Autônomo" <${process.env.SMTP_USER}>`,
+  to: process.env.CONTACT_EMAIL,
+  replyTo: data.email,
+  subject: "Novo morador interessado no Mercado Autônomo",
+  text: `
 Novo cadastro na landing page:
 
 Nome: ${data.name}
 E-mail: ${data.email}
 
 Esse morador deseja receber descontos e novidades do mercado autônomo.
-      `,
-    });
+  `,
+});
 
     return {
       statusCode: 200,

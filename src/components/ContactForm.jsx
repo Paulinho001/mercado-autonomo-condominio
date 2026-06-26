@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       const response = await fetch("/api/send-email", {
@@ -13,19 +17,26 @@ export default function ContactForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao cadastrar");
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Erro ao enviar o cadastro.");
       }
 
-      alert("Cadastro realizado! Você receberá nossas ofertas.");
+      toast.success("Cadastro realizado com sucesso!");
 
       setName("");
       setEmail("");
     } catch (error) {
-      alert("Não foi possível cadastrar. Tente novamente.");
+      console.error(error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -51,7 +62,9 @@ export default function ContactForm() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <button type="submit">Quero receber ofertas</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Enviando..." : "Quero receber ofertas"}
+          </button>
         </form>
       </div>
     </section>

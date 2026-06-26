@@ -146,7 +146,7 @@ margin-bottom:50px;
 
 
 
-benefit-grid{
+.benefit-grid{
 
 display:grid;
 grid-template-columns:repeat(4,1fr);
@@ -424,98 +424,93 @@ text-align:center;
 }
 
 
-#testimonials h2{
-
-font-size:40px;
-
-margin-bottom:50px;
-
+#testimonials {
+  padding: 100px 0;
+  background: white;
+  text-align: center;
+  overflow: hidden;
 }
 
-
-
-.testimonial-grid{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:30px;
-
+#testimonials h2 {
+  font-size: 40px;
+  margin-bottom: 50px;
 }
 
-
-
-.testimonial-card{
-
-background:#f7f7f7;
-
-padding:35px 25px;
-
-border-radius:25px;
-
-box-shadow:0 10px 30px #0001;
-
+.carousel {
+  width: 100%;
+  overflow: hidden;
 }
 
-
-
-.avatar{
-
-font-size:60px;
-
-margin-bottom:20px;
-
+.carousel-track {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+  animation: scrollTestimonials 25s linear infinite;
 }
 
-
-
-.testimonial-card p{
-
-color:#555;
-
-line-height:1.6;
-
-margin-bottom:20px;
-
+.carousel:hover .carousel-track {
+  animation-play-state: paused;
 }
 
+.testimonial-card {
+  min-width: 330px;
+  max-width: 330px;
+  min-height: 360px;
+  background: #f7f7f7;
+  padding: 35px 25px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px #0001;
 
-
-.stars{
-
-font-size:22px;
-
-margin-bottom:15px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
-
-.testimonial-card h3{
-
-margin-bottom:5px;
-
+.avatar {
+  font-size: 60px;
+  margin-bottom: 20px;
 }
 
-
-
-.testimonial-card span{
-
-color:#16a34a;
-
-font-weight:bold;
-
+.testimonial-card p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
-
-
-@media(max-width:900px){
-
-.testimonial-grid{
-
-grid-template-columns:1fr;
-
+.stars {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 15px;
 }
 
+.testimonial-card h3 {
+  margin-bottom: 5px;
+}
+
+.testimonial-card span {
+  color: #16a34a;
+  font-weight: bold;
+}
+
+@keyframes scrollTestimonials {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  .testimonial-card {
+    min-width: 280px;
+    max-width: 280px;
+  }
+
+  .carousel-track {
+    animation-duration: 18s;
+  }
 }
