@@ -1,13 +1,32 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+
+  const recaptchaRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (!name.trim()) {
+      toast.error("Informe seu nome.");
+      return;
+    }
+
+    if (!email.trim()) {
+      toast.error("Informe seu e-mail.");
+      return;
+    }
+
+    if (!captchaToken) {
+      toast.error("Confirme que você não é um robô.");
+      return;
+    }
 
     setLoading(true);
 
@@ -20,6 +39,7 @@ export default function ContactForm() {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
+          captchaToken,
         }),
       });
 
@@ -32,6 +52,8 @@ export default function ContactForm() {
 
       setName("");
       setEmail("");
+      setCaptchaToken("");
+      recaptchaRef.current?.reset();
     } catch (error) {
       console.error(error);
       toast.error(error.message);
@@ -60,6 +82,12 @@ export default function ContactForm() {
             placeholder="Seu melhor e-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey="6LfA9TYtAAAAAJ2UvKkyzDVsKKNvbgUe7PJcQMzu"
+            onChange={(token) => setCaptchaToken(token)}
           />
 
           <button type="submit" disabled={loading}>
